@@ -11,6 +11,9 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='frontend/img/logo.png') }}">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/style.css') }}?v=1.5">
     <style>
@@ -55,8 +58,11 @@
 
     <!-- Navbar Minimalis -->
     <nav class="navbar fixed-top custom-navbar" id="mainNavbar">
-        <div class="d-flex align-items-center justify-content-center w-100">
-            <ul class="navbar-nav flex-row gap-4 align-items-center m-0 p-0" id="navLinks">
+        <div class="container d-flex align-items-center justify-content-between w-100">
+            <a class="navbar-brand" href="#">
+                <img src="{{ url_for('static', filename='frontend/img/logo.png') }}" alt="Logo" height="30">
+            </a>
+            <ul class="navbar-nav flex-row gap-4 align-items-center m-0 p-0 mx-auto" id="navLinks">
                 <li class="nav-item"><a class="nav-link" href="#tentang">Tentang Saya</a></li>
                 <li class="nav-item"><a class="nav-link" href="#pengalaman">Pengalaman</a></li>
                 <li class="nav-item"><a class="nav-link" href="#proyek">Proyek</a></li>
