@@ -15,7 +15,7 @@ profile_bp = Blueprint("profile", __name__)
 @profile_bp.route("/")
 def index():
     """Halaman utama portofolio."""
-    return render_template('public/index.html')
+    return render_template('frontend/index.html')
 
 
 @profile_bp.route("/api/profile")
