@@ -57,7 +57,7 @@
     <div class="glow-effect bottom-glow"></div>
 
     <!-- Navbar Minimalis -->
-    <nav class="navbar fixed-top custom-navbar" id="mainNavbar" style="max-width: 100vw; overflow-x: auto; border-radius: 30px; margin-top: 10px;">
+    <nav class="navbar fixed-top custom-navbar" id="mainNavbar" style="border-radius: 30px; margin-top: 10px;">
         <div class="container-fluid px-2 px-md-4 d-flex align-items-center justify-content-between">
             <a class="navbar-brand d-none d-md-flex" href="#">
                 <img src="{{ url_for('static', filename='frontend/img/logo.png') }}" alt="Logo" height="30">
@@ -68,6 +68,9 @@
                 <li class="nav-item"><a class="nav-link px-2 px-md-3 text-nowrap" href="#proyek" style="font-size: 0.9rem;">Proyek</a></li>
                 <li class="nav-item"><a class="nav-link px-2 px-md-3 text-nowrap" href="{{ url_for('static', filename='frontend/files/cv.pdf') }}" target="_blank" style="font-size: 0.9rem;">CV</a></li>
             </ul>
+            <div class="nav-dots d-none mx-auto" id="navDots">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
         </div>
     </nav>
 
