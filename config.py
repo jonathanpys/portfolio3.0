@@ -8,8 +8,11 @@ import ssl
 from datetime import timedelta
 from dotenv import load_dotenv
 
+# Base directory of the project
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
 # Muat .env dari root project
-load_dotenv()
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 
 class Config:
@@ -50,8 +53,12 @@ class Config:
         "pool_pre_ping": True,
     }
     if _TIDB_SSL_CA:
-        _ssl_ctx = ssl.create_default_context(cafile=_TIDB_SSL_CA)
-        SQLALCHEMY_ENGINE_OPTIONS["connect_args"] = {"ssl": _ssl_ctx}
+        cert_path = os.path.join(BASE_DIR, _TIDB_SSL_CA) if not os.path.isabs(_TIDB_SSL_CA) else _TIDB_SSL_CA
+        if os.path.exists(cert_path):
+            _ssl_ctx = ssl.create_default_context(cafile=cert_path)
+            SQLALCHEMY_ENGINE_OPTIONS["connect_args"] = {"ssl": _ssl_ctx}
+        else:
+            print(f"WARNING: SSL CA file not found at {cert_path}")
 
     # ── Cloudinary ────────────────────────────────────────────
     CLOUDINARY_CLOUD_NAME = os.getenv("CLOUDINARY_CLOUD_NAME", "")
