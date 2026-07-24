@@ -33,8 +33,8 @@ def create_app():
     init_cloudinary(app)
 
     # ── Initialize extensions ─────────────────────────────────
-    # db.init_app(app)
-    # login_manager.init_app(app)
+    db.init_app(app)
+    login_manager.init_app(app)
 
     # ── Session timeout (sliding window 10 menit) ─────────────
     @app.before_request
@@ -45,12 +45,12 @@ def create_app():
     # _register_blueprints(app)
 
     # ── Import models agar SQLAlchemy tahu semua tabel ────────
-    # with app.app_context():
-    #     import app.models  # noqa: F401
+    with app.app_context():
+        import app.models  # noqa: F401
 
     @app.route('/')
     def test_route():
-        return "<h1>App initialized successfully (isolated)</h1>"
+        return "<h1>DB and Models initialized successfully</h1>"
 
     return app
 
