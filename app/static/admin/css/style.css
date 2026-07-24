@@ -26,11 +26,14 @@
   --radius-lg: 24px;
 }
 
-body {
+html, body {
   font-family: var(--font-primary);
   background-color: var(--bg-main);
   color: var(--text-main);
   min-height: 100vh;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Typography */
@@ -262,6 +265,7 @@ h1, h2, h3, h4, h5, h6 {
     -webkit-overflow-scrolling: touch;
     padding-bottom: 5px;
     scrollbar-width: none;
+    border-bottom: 1px solid var(--border-color);
   }
   .nav-tabs::-webkit-scrollbar {
     display: none;
@@ -283,11 +287,80 @@ h1, h2, h3, h4, h5, h6 {
   .navbar-brand {
     font-size: 1.2rem;
   }
-  .table td, .table th {
-    font-size: 0.85rem;
-    padding: 0.5rem;
-    white-space: nowrap;
+  .table-responsive {
+    overflow-x: hidden !important; /* disable horizontal scroll */
   }
+  
+  /* Stacked Cards for Tables */
+  .table, .table tbody, .table tr, .table td {
+    display: block;
+    width: 100%;
+  }
+  
+  .table thead {
+    display: none; /* Hide headers */
+  }
+  
+  .table tr {
+    margin-bottom: 1rem;
+    border: 1px solid var(--border-color) !important;
+    border-radius: var(--radius-md);
+    background-color: rgba(255, 255, 255, 0.02);
+    padding: 0.5rem;
+  }
+  
+  .table td {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    text-align: right;
+    padding: 0.75rem 0.5rem;
+    word-break: break-word;
+  }
+  
+  .table td:last-child {
+    border-bottom: none !important;
+    justify-content: flex-end; /* Action buttons */
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  /* Table Cell Labels */
+  /* Profiles */
+  #profiles-table td:nth-child(1)::before { content: "Nama:"; }
+  #profiles-table td:nth-child(2)::before { content: "Email:"; }
+  #profiles-table td:nth-child(3)::before { content: "Universitas:"; }
+  /* Skills */
+  #skills-table td:nth-child(1)::before { content: "ID:"; }
+  #skills-table td:nth-child(2)::before { content: "Skill:"; }
+  #skills-table td:nth-child(3)::before { content: "Icon:"; }
+  /* Experiences */
+  #experiences-table td:nth-child(1)::before { content: "Posisi:"; }
+  #experiences-table td:nth-child(2)::before { content: "Perusahaan:"; }
+  #experiences-table td:nth-child(3)::before { content: "Durasi:"; }
+  /* Projects */
+  #projects-table td:nth-child(1)::before { content: "Judul:"; }
+  #projects-table td:nth-child(2)::before { content: "Link:"; }
+  #projects-table td:nth-child(3)::before { content: "Gambar:"; }
+  /* Certificates */
+  #certificates-table td:nth-child(1)::before { content: "Judul:"; }
+  #certificates-table td:nth-child(2)::before { content: "Penerbit:"; }
+  #certificates-table td:nth-child(3)::before { content: "Tanggal:"; }
+  #certificates-table td:nth-child(4)::before { content: "Link:"; }
+  /* Contacts */
+  #contacts-table td:nth-child(1)::before { content: "Tanggal:"; }
+  #contacts-table td:nth-child(2)::before { content: "Dari:"; }
+  #contacts-table td:nth-child(3)::before { content: "Subjek:"; }
+  #contacts-table td:nth-child(4)::before { content: "Status:"; }
+
+  .table td::before {
+    font-weight: 600;
+    color: var(--accent-lime);
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
   .btn-primary, .btn-secondary, .btn-danger, .btn-info {
     padding: 0.4rem 1rem;
     font-size: 0.85rem;

@@ -13,23 +13,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const navDots = document.getElementById('navDots');
 
     if (navbar && navLinks && navDots) {
+        let isExpandedByUser = false;
+        
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.classList.add('is-scrolled');
-                navLinks.classList.add('d-none');
-                navDots.classList.remove('d-none');
+                if (!isExpandedByUser) navbar.classList.add('is-scrolled');
             } else {
                 navbar.classList.remove('is-scrolled');
-                navLinks.classList.remove('d-none');
-                navDots.classList.add('d-none');
+                isExpandedByUser = false;
             }
         });
 
         // Expand navbar when dots are clicked
         navDots.addEventListener('click', () => {
             navbar.classList.remove('is-scrolled');
-            navLinks.classList.remove('d-none');
-            navDots.classList.add('d-none');
+            isExpandedByUser = true;
         });
     }
 
