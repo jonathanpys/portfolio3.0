@@ -6,6 +6,16 @@ Inisialisasi Flask app, load config, register extensions & blueprints.
 from flask import Flask, session
 from .extensions import db, login_manager
 
+# ── Import Blueprints di Top-Level agar dideteksi Vercel AST Parser ──
+from .routes.health import health_bp
+from .routes.public.profile import profile_bp
+from .routes.public.skill import skill_bp
+from .routes.public.experience import experience_bp
+from .routes.public.project import project_bp
+from .routes.public.contact import contact_bp
+from .routes.public.certificate import certificate_bp
+from .routes.admin import admin_bp
+
 
 def create_app():
     """Factory function untuk membuat instance Flask app."""
@@ -52,17 +62,9 @@ def create_app():
 def _register_blueprints(app: Flask):
     """Register semua blueprint ke app."""
     # --- Health check ---
-    from .routes.health import health_bp
     app.register_blueprint(health_bp)
 
     # --- Public routes ---
-    from .routes.public.profile import profile_bp
-    from .routes.public.skill import skill_bp
-    from .routes.public.experience import experience_bp
-    from .routes.public.project import project_bp
-    from .routes.public.contact import contact_bp
-    from .routes.public.certificate import certificate_bp
-
     app.register_blueprint(profile_bp)
     app.register_blueprint(skill_bp)
     app.register_blueprint(experience_bp)
@@ -71,6 +73,4 @@ def _register_blueprints(app: Flask):
     app.register_blueprint(certificate_bp)
 
     # --- Admin routes ---
-    from .routes.admin import admin_bp
-
     app.register_blueprint(admin_bp)
