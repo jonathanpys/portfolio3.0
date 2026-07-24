@@ -8,12 +8,12 @@ from app.extensions import db, login_manager
 
 # ── Import Blueprints di Top-Level agar dideteksi Vercel AST Parser ──
 from app.routes.health import health_bp
-from app.routes.public.profile import profile_bp
-from app.routes.public.skill import skill_bp
-from app.routes.public.experience import experience_bp
-from app.routes.public.project import project_bp
-from app.routes.public.contact import contact_bp
-from app.routes.public.certificate import certificate_bp
+from app.routes.frontend.profile import profile_bp
+from app.routes.frontend.skill import skill_bp
+from app.routes.frontend.experience import experience_bp
+from app.routes.frontend.project import project_bp
+from app.routes.frontend.contact import contact_bp
+from app.routes.frontend.certificate import certificate_bp
 from app.routes.admin import admin_bp
 
 
