@@ -4,17 +4,17 @@ app/__init__.py — Application Factory.
 Inisialisasi Flask app, load config, register extensions & blueprints.
 """
 from flask import Flask, session
-from .extensions import db, login_manager
+from app.extensions import db, login_manager
 
 # ── Import Blueprints di Top-Level agar dideteksi Vercel AST Parser ──
-from .routes.health import health_bp
-from .routes.public.profile import profile_bp
-from .routes.public.skill import skill_bp
-from .routes.public.experience import experience_bp
-from .routes.public.project import project_bp
-from .routes.public.contact import contact_bp
-from .routes.public.certificate import certificate_bp
-from .routes.admin import admin_bp
+from app.routes.health import health_bp
+from app.routes.public.profile import profile_bp
+from app.routes.public.skill import skill_bp
+from app.routes.public.experience import experience_bp
+from app.routes.public.project import project_bp
+from app.routes.public.contact import contact_bp
+from app.routes.public.certificate import certificate_bp
+from app.routes.admin import admin_bp
 
 
 def create_app():
@@ -29,7 +29,7 @@ def create_app():
     app.config.from_object("config.Config")
 
     # ── Initialize Cloudinary ─────────────────────────────────
-    from .services.cloudinary_service import init_cloudinary
+    from app.services.cloudinary_service import init_cloudinary
     init_cloudinary(app)
 
     # ── Initialize extensions ─────────────────────────────────
@@ -54,7 +54,7 @@ def create_app():
 
     # ── Import models agar SQLAlchemy tahu semua tabel ────────
     with app.app_context():
-        from . import models  # noqa: F401
+        import app.models  # noqa: F401
 
     return app
 
