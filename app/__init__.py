@@ -33,28 +33,24 @@ def create_app():
     init_cloudinary(app)
 
     # ── Initialize extensions ─────────────────────────────────
-    db.init_app(app)
-    login_manager.init_app(app)
+    # db.init_app(app)
+    # login_manager.init_app(app)
 
     # ── Session timeout (sliding window 10 menit) ─────────────
     @app.before_request
     def make_session_permanent():
-        """
-        Setiap request me-refresh session timer.
-
-        Flask "permanent session" = session pakai PERMANENT_SESSION_LIFETIME
-        sebagai batas waktu. Dengan me-set session.permanent = True di setiap
-        request, timer di-reset (sliding window), sehingga session hanya
-        expire jika user IDLE selama 10 menit tanpa aktivitas apapun.
-        """
         session.permanent = True
 
     # ── Register blueprints ───────────────────────────────────
-    _register_blueprints(app)
+    # _register_blueprints(app)
 
     # ── Import models agar SQLAlchemy tahu semua tabel ────────
-    with app.app_context():
-        import app.models  # noqa: F401
+    # with app.app_context():
+    #     import app.models  # noqa: F401
+
+    @app.route('/')
+    def test_route():
+        return "<h1>App initialized successfully (isolated)</h1>"
 
     return app
 

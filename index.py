@@ -1,10 +1,17 @@
 from flask import Flask
+
 app = Flask(__name__)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return "<h1>Hello from Vercel!</h1><p>If you see this, the Vercel runtime is working correctly.</p>"
+try:
+    from app import create_app
+    app = create_app()
+except Exception as e:
+    import traceback
+    error_msg = traceback.format_exc()
+    @app.route('/', defaults={'path': ''})
+    @app.route('/<path:path>')
+    def catch_all(path):
+        return f"<h1>Failed to init App</h1><pre>{error_msg}</pre>", 500
 
 if __name__ == "__main__":
     app.run(debug=True)
