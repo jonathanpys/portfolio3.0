@@ -1,0 +1,17 @@
+# === Core Framework ===
+Flask==3.1.*
+python-dotenv==1.1.*
+
+# === Database (SQLAlchemy + PyMySQL for TiDB/MySQL) ===
+Flask-SQLAlchemy==3.1.*
+PyMySQL==1.1.*
+cryptography           # required by PyMySQL for SSL connections
+
+# === Auth ===
+Flask-Login==0.6.*
+
+# === Image Hosting ===
+cloudinary==1.*
+
+# === Email Service ===
+resend==2.*

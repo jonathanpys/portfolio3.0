@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Loading...</title>
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='public/css/style.css') }}?v=1.5">
+    <style>
+        .project-link-btn-custom {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            width: auto !important;
+            height: auto !important;
+        }
+        .project-link-btn-custom .project-link-text {
+            max-width: 0;
+            opacity: 0;
+            margin-left: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .project-link-btn-custom:hover {
+            padding: 10px 20px;
+        }
+        .project-link-btn-custom:hover .project-link-text {
+            max-width: 150px;
+            opacity: 1;
+            margin-left: 8px;
+        }
+        #projectModalDesc {
+            text-align: justify !important;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-effect"></div>
+    <div class="glow-effect bottom-glow"></div>
+
+    <!-- Navbar Minimalis -->
+    <nav class="navbar fixed-top custom-navbar" id="mainNavbar">
+        <div class="d-flex align-items-center justify-content-center w-100">
+            <ul class="navbar-nav flex-row gap-4 align-items-center m-0 p-0" id="navLinks">
+                <li class="nav-item"><a class="nav-link" href="#tentang">Tentang Saya</a></li>
+                <li class="nav-item"><a class="nav-link" href="#pengalaman">Pengalaman</a></li>
+                <li class="nav-item"><a class="nav-link" href="#proyek">Proyek</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('static', filename='public/files/cv.pdf') }}" target="_blank">CV</a></li>
+            </ul>
+            <div class="nav-dots d-none" id="navDots">
+                <i class="fa-solid fa-ellipsis"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container main-content">
+        <!-- HERO SECTION -->
+        <section id="hero" class="hero-section text-center d-flex flex-column justify-content-center align-items-center">
+            <a href="/admin/login" style="text-decoration: none; color: inherit;">
+                <div class="avatar-container mb-4" id="hero-avatar">
+                    <!-- Injected via JS -->
+                    <div class="spinner-border text-accent" role="status"></div>
+                </div>
+            </a>
+            
+            
+            <h1 class="hero-name" id="hero-name">Memuat Data...</h1>
+            <p class="hero-subtitle mt-3" id="hero-subtitle"></p>
+
+            <div class="social-links mt-4" id="hero-social">
+                <!-- Social links diinject via JS -->
+            </div>
+
+            <a href="#tentang" class="scroll-down mt-5">
+                <i class="fa-solid fa-arrow-down"></i>
+            </a>
+        </section>
+
+        <!-- TENTANG SAYA & SKILLS SECTION -->
+        <section id="tentang" class="content-section">
+            <h2 class="section-title reveal"><span class="text-accent">01.</span> Tentang saya</h2>
+            
+            <div class="row g-4 mt-2">
+                <!-- Kiri: Gambar -->
+                <div class="col-lg-4 reveal-left">
+                    <div class="glass-card p-4 h-100 d-flex flex-column align-items-center justify-content-center text-center">
+                        <div id="about-photo-container" class="w-100" style="border-radius: 12px; overflow: hidden; aspect-ratio: 1/1; background: var(--bg-input); display: flex; align-items: center; justify-content: center;">
+                            <i class="fa-solid fa-image text-muted fs-1"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kanan: 2 Tingkat (Atas: Siapakah Jonathan & Info Tambahan, Bawah: Teknologi) -->
+                <div class="col-lg-8">
+                    <div class="row g-4 h-100">
+                        <!-- Tingkat Atas -->
+                        <div class="col-md reveal delay-100">
+                            <div class="glass-card p-4 h-100">
+                                <h4 class="mb-3" id="about-title">Siapakah Jonathan?</h4>
+                                <div class="text-muted" id="about-desc">
+                                    <!-- Injected via JS -->
+                                    Memuat deskripsi...
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-auto reveal-right delay-200">
+                            <div class="glass-card p-4 h-100">
+                                <h4 class="mb-3">Informasi Tambahan</h4>
+                                <ul class="list-unstyled text-muted" id="about-info">
+                                    <!-- Injected via JS -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Tingkat Bawah -->
+                        <div class="col-12 reveal delay-100">
+                            <div class="glass-card p-4 h-100">
+                                <h4 class="mb-4">Teknologi dan Alat</h4>
+                                <div class="skills-container" id="skills-container">
+                                    <!-- Skills diinject via JS -->
+                                    <div class="spinner-border text-accent spinner-sm" role="status"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sertifikasi Card (Full Width) -->
+            <div class="row mt-4 reveal delay-100">
+                <div class="col-12">
+                    <div class="glass-card p-4">
+                        <h4 class="mb-4">Sertifikasi & Lisensi</h4>
+                        <div class="row g-4" id="certificates-container">
+                            <!-- Certificates diinject via JS -->
+                            <div class="col-12 text-center">
+                                <div class="spinner-border text-accent spinner-sm" role="status"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PENGALAMAN SECTION -->
+        <section id="pengalaman" class="content-section">
+            <h2 class="section-title reveal"><span class="text-accent">02.</span> Jenjang karier</h2>
+            
+            <div class="timeline mt-5" id="experience-container">
+                <!-- Experiences diinject via JS -->
+                <div class="spinner-border text-accent" role="status"></div>
+            </div>
+        </section>
+
+        <!-- PROYEK SECTION -->
+        <section id="proyek" class="content-section">
+            <h2 class="section-title reveal"><span class="text-accent">03.</span> Proyek terbaru</h2>
+            <p class="text-muted mb-5 reveal delay-100">Beberapa proyek nyata yang telah saya kembangkan.</p>
+
+            <div class="row g-4" id="projects-container">
+                <!-- Projects diinject via JS -->
+                <div class="col-12 text-center">
+                    <div class="spinner-border text-accent" role="status"></div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5 d-none" id="projects-show-more-container">
+                <button class="btn btn-outline-accent project-link-btn-custom" id="btn-show-more-projects" title="Tampilkan Lebih Banyak" style="border: 1px solid var(--accent-lime); background: transparent; color: var(--accent-lime);">
+                    <i class="fa-solid fa-arrow-down m-0"></i>
+                    <span class="project-link-text">Show More</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- KONTAK SECTION -->
+        <section id="kontak" class="content-section mb-5">
+            <h2 class="section-title reveal"><span class="text-accent">04.</span> Hubungi Saya</h2>
+            <p class="text-muted mb-4 reveal delay-100">Punya pertanyaan atau tawaran kerja sama? Silakan kirim pesan melalui form di bawah ini.</p>
+
+            <div class="row justify-content-center">
+                <div class="col-lg-8 reveal delay-200">
+                    <div class="glass-card p-4 p-md-5">
+                        <form id="contactForm">
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Nama <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="nama" required placeholder="John Doe">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" name="email" required placeholder="john@example.com">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Subjek <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" name="subjek" required placeholder="Tawaran Kerjasama / Pertanyaan">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label">Pesan <span class="text-danger">*</span></label>
+                                    <textarea class="form-control" name="pesan" rows="5" required placeholder="Halo, saya ingin berdiskusi mengenai..."></textarea>
+                                </div>
+                                <div class="col-12 text-end mt-4">
+                                    <button type="submit" class="btn btn-primary" id="btnSubmitContact">
+                                        <span>Kirim Pesan</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-4 border-top border-secondary text-muted small">
+        <div class="container d-flex justify-content-between align-items-center flex-column flex-md-row">
+            <div id="footer-name">© 2026 Portfolio</div>
+            <div id="footer-address" class="mt-2 mt-md-0 text-end">
+                Dibuat dengan Flask & Vanilla JS
+            </div>
+        </div>
+    </footer>
+
+    <!-- Certificate Modal -->
+    <div class="modal fade" id="certModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glass-card border-0 shadow-lg">
+                <div class="modal-header border-bottom border-secondary">
+                    <h5 class="modal-title fw-bold" id="certModalTitle">Detail Sertifikasi</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4 text-center">
+                    <div id="certModalImgContainer" class="w-100 mb-4" style="border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.2); padding: 15px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                        <img id="certModalImg" src="" alt="Sertifikat" style="max-width: 100%; max-height: 50vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    </div>
+                    <h4 id="certModalName" class="fw-bold mb-2 text-white"></h4>
+                    <div id="certModalPublisher" class="text-accent mb-2"><i class="fa-solid fa-building me-2"></i><span></span></div>
+                    <div id="certModalDate" class="text-muted small mb-3"><i class="fa-solid fa-calendar-alt me-2"></i><span></span></div>
+                    <div id="certModalLinkContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Project Modal -->
+    <div class="modal fade" id="projectModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content glass-card border-0 shadow-lg">
+                <div class="modal-header border-bottom border-secondary">
+                    <h5 class="modal-title fw-bold" id="projectModalTitle">Detail Proyek</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div id="projectModalImgContainer" class="w-100 mb-4" style="border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: rgba(0, 0, 0, 0.2); padding: 15px; border: 1px solid rgba(255, 255, 255, 0.05);">
+                        <img id="projectModalImg" src="" alt="Proyek" style="max-width: 100%; max-height: 50vh; object-fit: contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+                    </div>
+                    <h4 id="projectModalName" class="fw-bold mb-3 text-white text-center"></h4>
+                    <div id="projectModalDesc" class="text-muted mb-4" style="text-align: justify;"></div>
+                    <div id="projectModalLinkContainer" class="text-center"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Main JS -->
+    <script src="{{ url_for('static', filename='public/js/main.js') }}?v=2.2"></script>
+</body>
+</html>

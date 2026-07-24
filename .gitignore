@@ -1,0 +1,29 @@
+# Environment & secrets
+.env
+*.pem
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database (local)
+*.db
+*.sqlite3
+
+# Unused files
+struktur_folder.txt

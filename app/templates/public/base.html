@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio — Fernando Morenilla">
+    <title>{% block title %}Portfolio{% endblock %}</title>
+
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Google Fonts: Sansation fallback to Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- TODO: Link ke public CSS -->
+    <!-- <link rel="stylesheet" href="{{ url_for('public_static', filename='css/style.css') }}"> -->
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- TODO: Navbar global -->
+    <nav>
+        <!-- TODO: Implementasi navigasi -->
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- TODO: Footer global -->
+    <footer>
+        <!-- TODO: Implementasi footer -->
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- TODO: Link ke public JS -->
+    <!-- <script src="{{ url_for('public_static', filename='js/main.js') }}"></script> -->
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,150 @@
+{% extends "admin/base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4 align-items-center">
+    <div class="col">
+        <h4 class="mb-0 fw-bold">Manajemen Data Portofolio</h4>
+        <p class="text-muted small mb-0">Kelola informasi, proyek, dan pengalaman yang ditampilkan ke publik.</p>
+    </div>
+</div>
+
+<div class="card p-4 mb-5 border-0 shadow-lg">
+    <!-- Nav tabs -->
+    <ul class="nav nav-tabs" id="adminTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true" data-entity="profiles"><i class="fa-solid fa-address-card me-2"></i>Profil</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills" type="button" role="tab" aria-controls="skills" aria-selected="false" data-entity="skills"><i class="fa-solid fa-code me-2"></i>Skills</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="experiences-tab" data-bs-toggle="tab" data-bs-target="#experiences" type="button" role="tab" aria-controls="experiences" aria-selected="false" data-entity="experiences"><i class="fa-solid fa-briefcase me-2"></i>Pengalaman</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="projects-tab" data-bs-toggle="tab" data-bs-target="#projects" type="button" role="tab" aria-controls="projects" aria-selected="false" data-entity="projects"><i class="fa-solid fa-laptop-code me-2"></i>Proyek</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="certificates-tab" data-bs-toggle="tab" data-bs-target="#certificates" type="button" role="tab" aria-controls="certificates" aria-selected="false" data-entity="certificates"><i class="fa-solid fa-certificate me-2"></i>Sertifikasi</button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="contacts-tab" data-bs-toggle="tab" data-bs-target="#contacts" type="button" role="tab" aria-controls="contacts" aria-selected="false" data-entity="contacts"><i class="fa-solid fa-envelope me-2"></i>Pesan Masuk</button>
+        </li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content pt-4" id="adminTabsContent">
+        <!-- Profile Tab -->
+        <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 text-muted"><i class="fa-solid fa-address-card text-accent me-2"></i>Data Profil Utama</h5>
+                <button class="btn btn-sm btn-primary px-3" onclick="openForm('profiles')"><i class="fa-solid fa-pen-to-square me-2"></i>Edit / Buat Profil</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless table-hover" id="profiles-table">
+                    <thead><tr><th>Nama Lengkap</th><th>Email</th><th>Universitas</th><th>Aksi</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Skills Tab -->
+        <div class="tab-pane fade" id="skills" role="tabpanel" aria-labelledby="skills-tab">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 text-muted"><i class="fa-solid fa-code text-accent me-2"></i>Daftar Keahlian</h5>
+                <button class="btn btn-sm btn-primary px-3" onclick="openForm('skills')"><i class="fa-solid fa-plus me-2"></i>Tambah Skill</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless table-hover" id="skills-table">
+                    <thead><tr><th>ID</th><th>Nama Skill</th><th>Icon (Class/URL)</th><th>Aksi</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Experiences Tab -->
+        <div class="tab-pane fade" id="experiences" role="tabpanel" aria-labelledby="experiences-tab">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 text-muted"><i class="fa-solid fa-briefcase text-accent me-2"></i>Riwayat Pengalaman</h5>
+                <button class="btn btn-sm btn-primary px-3" onclick="openForm('experiences')"><i class="fa-solid fa-plus me-2"></i>Tambah Pengalaman</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless table-hover" id="experiences-table">
+                    <thead><tr><th>Posisi</th><th>Perusahaan</th><th>Durasi</th><th>Aksi</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Projects Tab -->
+        <div class="tab-pane fade" id="projects" role="tabpanel" aria-labelledby="projects-tab">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 text-muted"><i class="fa-solid fa-laptop-code text-accent me-2"></i>Daftar Proyek</h5>
+                <button class="btn btn-sm btn-primary px-3" onclick="openForm('projects')"><i class="fa-solid fa-plus me-2"></i>Tambah Proyek</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless table-hover" id="projects-table">
+                    <thead><tr><th>Judul</th><th>Link</th><th>Gambar</th><th>Aksi</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Certificates Tab -->
+        <div class="tab-pane fade" id="certificates" role="tabpanel" aria-labelledby="certificates-tab">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 text-muted"><i class="fa-solid fa-certificate text-accent me-2"></i>Daftar Sertifikasi</h5>
+                <button class="btn btn-sm btn-primary px-3" onclick="openForm('certificates')"><i class="fa-solid fa-plus me-2"></i>Tambah Sertifikasi</button>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless table-hover" id="certificates-table">
+                    <thead><tr><th>Judul</th><th>Penerbit</th><th>Tanggal</th><th>Kredensial</th><th>Aksi</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Contacts Tab -->
+        <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0 text-muted"><i class="fa-solid fa-envelope text-accent me-2"></i>Pesan dari Pengunjung</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-dark table-borderless table-hover" id="contacts-table">
+                    <thead><tr><th>Tgl</th><th>Dari</th><th>Subjek</th><th>Status</th><th>Aksi</th></tr></thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Universal untuk Form CRUD -->
+<div class="modal fade" id="crudModal" tabindex="-1" aria-labelledby="crudModalLabel" aria-hidden="true" data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content shadow-lg border-0">
+      <div class="modal-header border-bottom border-secondary">
+        <h5 class="modal-title fw-bold" id="crudModalLabel">Form</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div id="crudAlert" class="alert alert-danger d-none rounded-3 small"></div>
+        <form id="crudForm">
+            <!-- Fields disuntik secara dinamis via JS -->
+            <div id="dynamicFormFields" class="row g-3"></div>
+        </form>
+      </div>
+      <div class="modal-footer border-top border-secondary bg-dark bg-opacity-50">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+        <button type="submit" form="crudForm" class="btn btn-primary" id="saveBtn">Simpan Perubahan</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('admin.static', filename='js/admin.js') }}?v=1.3"></script>
+{% endblock %}
