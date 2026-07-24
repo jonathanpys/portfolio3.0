@@ -42,15 +42,11 @@ def create_app():
         session.permanent = True
 
     # ── Register blueprints ───────────────────────────────────
-    # _register_blueprints(app)
+    _register_blueprints(app)
 
     # ── Import models agar SQLAlchemy tahu semua tabel ────────
     with app.app_context():
-        import app.models  # noqa: F401
-
-    @app.route('/')
-    def test_route():
-        return "<h1>DB and Models initialized successfully</h1>"
+        from app import models  # noqa: F401
 
     return app
 
