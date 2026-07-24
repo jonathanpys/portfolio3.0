@@ -5,6 +5,7 @@ app = Flask(__name__)
 try:
     from app import create_app
     app = create_app()
+    app.config['PROPAGATE_EXCEPTIONS'] = True
     
     # Bungkus aplikasi dengan WSGI Middleware untuk menangkap error saat runtime
     original_wsgi_app = app.wsgi_app
