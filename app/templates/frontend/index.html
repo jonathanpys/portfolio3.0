@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="{{ url_for('static', filename='frontend/img/logo.png') }}">
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='frontend/img/logo portfolio.png') }}">
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='frontend/css/style.css') }}?v=1.7">
@@ -53,15 +53,20 @@
     </style>
 </head>
 <body>
+    <!-- PRELOADER -->
+    <div id="preloader">
+        <div class="preloader-glow"></div>
+        <svg class="preloader-logo" viewBox="0 0 300 100" width="300" height="100" xmlns="http://www.w3.org/2000/svg" style="z-index: 2; position: relative;">
+            <text x="50%" y="65%" text-anchor="middle" class="text-logo">JPYS</text>
+        </svg>
+    </div>
+
     <div class="glow-effect"></div>
     <div class="glow-effect bottom-glow"></div>
 
     <!-- Navbar Minimalis -->
     <nav class="navbar fixed-top custom-navbar" id="mainNavbar" style="border-radius: 30px; margin-top: 25px;">
         <div class="container-fluid px-2 px-md-4 d-flex align-items-center justify-content-between">
-            <a class="navbar-brand d-none d-md-flex" href="#">
-                <img src="{{ url_for('static', filename='frontend/img/logo.png') }}" alt="Logo" height="30">
-            </a>
             <ul class="navbar-nav flex-row gap-2 gap-md-4 align-items-center m-0 p-0 mx-auto" id="navLinks" style="flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; margin-bottom: 0 !important;">
                 <li class="nav-item"><a class="nav-link px-2 px-md-3 text-nowrap" href="#tentang" style="font-size: 0.9rem;">Tentang Saya</a></li>
                 <li class="nav-item"><a class="nav-link px-2 px-md-3 text-nowrap" href="#pengalaman" style="font-size: 0.9rem;">Pengalaman</a></li>
@@ -83,23 +88,20 @@
                 <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                         <pattern id="lilpys-pattern" width="180" height="200" patternUnits="userSpaceOnUse" patternTransform="scale(1.5)">
-                            <!-- L -->
-                            <path class="lilpys-stroke" d="M20,0 V180 H50" />
-                            <!-- I -->
-                            <path class="lilpys-stroke" d="M65,0 V200" />
-                            <!-- L -->
-                            <path class="lilpys-stroke" d="M80,20 V200 H110" />
+                            <!-- J -->
+                            <path class="lilpys-stroke" d="M40,0 V180 H15 V130" />
                             <!-- P -->
-                            <path class="lilpys-stroke" d="M125,0 V100 M125,0 H155 V50 H125" />
+                            <path class="lilpys-stroke" d="M65,0 V200 M65,0 H95 V60 H65" />
                             <!-- Y -->
-                            <path class="lilpys-stroke" d="M170,0 V40 L155,70 V200" />
+                            <path class="lilpys-stroke" d="M115,0 V40 L130,70 V200 M145,0 V40 L130,70" />
                             <!-- S -->
-                            <path class="lilpys-stroke" d="M50,40 H20 V80 H50 V120 H20" />
+                            <path class="lilpys-stroke" d="M175,30 H155 V70 H175 V110 H155" />
                             
                             <!-- Filler Pinstripes to make it abstract -->
                             <path class="lilpys-stroke" d="M5,0 V200" />
-                            <path class="lilpys-stroke" d="M110,0 V100 M110,140 V200" />
-                            <path class="lilpys-stroke" d="M175,80 V200" />
+                            <path class="lilpys-stroke" d="M100,80 V200" />
+                            <path class="lilpys-stroke" d="M175,130 V200" />
+                            <path class="lilpys-stroke" d="M150,100 V200" />
                         </pattern>
                     </defs>
                     <rect width="100%" height="100%" fill="url(#lilpys-pattern)" />

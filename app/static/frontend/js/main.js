@@ -4,6 +4,18 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
+    // Preloader Logic
+    window.addEventListener('load', () => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            // Wait for logo animation to finish
+            setTimeout(() => {
+                preloader.classList.add('preloader-hidden');
+                setTimeout(() => preloader.remove(), 600);
+            }, 2500);
+        }
+    });
+
     // Projects Pagination State
     window.projectsDataAll = [];
     window.projectsShowingAll = false;

@@ -768,11 +768,73 @@ h1, h2, h3, h4, h5, h6 {
   opacity: 0.08; /* Very faint */
   stroke-dasharray: 600;
   stroke-dashoffset: 600;
-  animation: drawPinstripe 12s linear infinite;
+  animation: drawPinstripe 8s linear infinite;
 }
 
 @keyframes drawPinstripe {
   0% { stroke-dashoffset: 600; }
-  50% { stroke-dashoffset: 0; }
+  75% { stroke-dashoffset: 0; }
   100% { stroke-dashoffset: -600; }
+}
+
+/* Preloader Styles */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(-45deg, #0B0F19, #1C253C, #0B0F19, #05070a);
+  background-size: 400% 400%;
+  animation: gradientBG 4s ease infinite;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  overflow: hidden;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+#preloader.preloader-hidden {
+  transform: translateY(-100%);
+}
+
+.preloader-glow {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(204, 255, 0, 0.1) 0%, transparent 60%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: pulseGlow 3s ease-in-out infinite alternate;
+  z-index: 0;
+}
+
+@keyframes pulseGlow {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1.5); opacity: 1; }
+}
+
+.text-logo {
+  font-family: var(--font-primary);
+  font-size: 80px;
+  font-weight: 800;
+  letter-spacing: -2px; /* Makes letters connect/touch */
+  fill: transparent;
+  stroke: var(--accent-lime);
+  stroke-width: 2px;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: drawTextLogo 2.5s ease forwards;
+}
+
+@keyframes drawTextLogo {
+  0% { stroke-dashoffset: 400; fill: transparent; filter: drop-shadow(0 0 0 transparent); }
+  60% { stroke-dashoffset: 0; fill: transparent; }
+  80% { fill: var(--accent-lime); filter: drop-shadow(0 0 20px rgba(204, 255, 0, 0.5)); }
+  100% { stroke-dashoffset: 0; fill: var(--accent-lime); filter: drop-shadow(0 0 25px rgba(204, 255, 0, 0.8)); }
 }
