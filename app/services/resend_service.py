@@ -23,27 +23,51 @@ def send_contact_email(nama, email, subjek, pesan):
 
     # Format email (dikirim ke owner)
     html_content = f"""
-    <div style="font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #0B0F19; padding: 30px; border-radius: 12px; border: 1px solid #1C253C;">
-        <div style="text-align: center; margin-bottom: 30px;">
-            <h2 style="color: #CCFF00; margin: 0; font-size: 24px; text-transform: uppercase; letter-spacing: 1px;">Pesan Baru</h2>
-            <p style="color: #94A3B8; font-size: 14px; margin-top: 5px;">Dari website portofolio Anda</p>
-        </div>
-        
-        <div style="background-color: #141B2D; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-            <p style="margin: 0 0 12px; color: #FFFFFF;"><strong style="color: #94A3B8; width: 70px; display: inline-block;">Nama:</strong> {nama}</p>
-            <p style="margin: 0 0 12px; color: #FFFFFF;"><strong style="color: #94A3B8; width: 70px; display: inline-block;">Email:</strong> <a href="mailto:{email}" style="color: #CCFF00; text-decoration: none;">{email}</a></p>
-            <p style="margin: 0; color: #FFFFFF;"><strong style="color: #94A3B8; width: 70px; display: inline-block;">Subjek:</strong> {subjek}</p>
-        </div>
-
-        <div style="background-color: #141B2D; padding: 20px 25px; border-radius: 8px; color: #FFFFFF; line-height: 1.6;">
-            <h3 style="margin-top: 0; color: #CCFF00; font-size: 16px; border-bottom: 1px solid #1C253C; padding-bottom: 12px; margin-bottom: 15px;">Isi Pesan:</h3>
-            <div style="font-size: 15px;">{pesan.replace(chr(10), '<br>')}</div>
-        </div>
-        
-        <div style="text-align: center; margin-top: 30px; padding-top: 20px; border-top: 1px solid #1C253C; color: #64748B; font-size: 12px;">
-            <p style="margin: 0;">Email ini dikirim secara otomatis melalui form kontak di website portofolio Anda.</p>
-        </div>
-    </div>
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #f4f4f5; margin: 0; padding: 40px 0; color: #333333;">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);">
+            <tr>
+                <td style="padding: 40px 40px 20px 40px; border-bottom: 1px solid #eeeeee;">
+                    <h1 style="margin: 0; font-size: 22px; color: #111827; letter-spacing: -0.5px;">Pesan Baru</h1>
+                    <p style="margin: 8px 0 0 0; font-size: 14px; color: #6b7280;">Anda menerima pesan baru dari website portofolio.</p>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 30px 40px;">
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 25px;">
+                        <tr>
+                            <td width="80" style="padding: 8px 0; font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Nama</td>
+                            <td style="padding: 8px 0; font-size: 15px; color: #111827;">{nama}</td>
+                        </tr>
+                        <tr>
+                            <td width="80" style="padding: 8px 0; font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Email</td>
+                            <td style="padding: 8px 0; font-size: 15px; color: #111827;"><a href="mailto:{email}" style="color: #2563eb; text-decoration: none;">{email}</a></td>
+                        </tr>
+                        <tr>
+                            <td width="80" style="padding: 8px 0; font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Subjek</td>
+                            <td style="padding: 8px 0; font-size: 15px; color: #111827; font-weight: 500;">{subjek}</td>
+                        </tr>
+                    </table>
+                    
+                    <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 20px;">
+                        <h2 style="margin: 0 0 15px 0; font-size: 13px; font-weight: 600; color: #6b7280; text-transform: uppercase; letter-spacing: 0.5px;">Isi Pesan</h2>
+                        <div style="font-size: 15px; line-height: 1.6; color: #374151;">{pesan.replace(chr(10), '<br>')}</div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="background-color: #f8fafc; padding: 20px 40px; text-align: center; border-top: 1px solid #eeeeee;">
+                    <p style="margin: 0; font-size: 12px; color: #94a3b8;">Dikirim secara otomatis dari form kontak website Anda</p>
+                </td>
+            </tr>
+        </table>
+    </body>
+    </html>
     """
 
     try:

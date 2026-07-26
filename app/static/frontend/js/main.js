@@ -181,7 +181,11 @@ async function fetchSkills() {
                 return;
             }
             
-            json.data.forEach(skill => {
+            let html = '';
+            let htmlRow1 = '';
+            let htmlRow2 = '';
+            
+            json.data.forEach((skill, index) => {
                 let iconHtml = '';
                 if (skill.icon_class) {
                     if (skill.icon_class.startsWith('http')) {
@@ -191,12 +195,30 @@ async function fetchSkills() {
                     }
                 }
                 
-                container.innerHTML += `
+                const badgeHtml = `
                     <div class="skill-badge">
                         ${iconHtml} ${skill.nama_skill}
                     </div>
                 `;
+                
+                html += badgeHtml;
+                
+                if (index % 2 === 0) {
+                    htmlRow1 += badgeHtml;
+                } else {
+                    htmlRow2 += badgeHtml;
+                }
             });
+            
+            container.innerHTML = html;
+            
+            const row1 = document.getElementById('marquee-row-1');
+            const row2 = document.getElementById('marquee-row-2');
+            if (row1 && row2) {
+                // Duplicate 4 times to ensure it covers wide screens
+                row1.innerHTML = htmlRow1 + htmlRow1 + htmlRow1 + htmlRow1;
+                row2.innerHTML = htmlRow2 + htmlRow2 + htmlRow2 + htmlRow2;
+            }
         }
     } catch (err) {
         console.error("Error fetching skills", err);
@@ -319,6 +341,9 @@ async function fetchExperiences() {
                 `;
             });
             container.innerHTML = html;
+            if (typeof initExperienceIDE === 'function') {
+                initExperienceIDE(json.data);
+            }
             if (window.observeElements) window.observeElements();
         }
     } catch (err) {
@@ -514,4 +539,100 @@ function showToast(text, type) {
             toast.remove();
         });
     }, 3000);
+}
+
+let typingTimeout = null;
+
+function initExperienceIDE(experiences) {
+    const fileList = document.getElementById('ide-file-list');
+    if (!fileList) return;
+    
+    fileList.innerHTML = '';
+    
+    experiences.forEach((exp, index) => {
+        // Create pseudo-filename
+        const yearMatch = exp.durasi ? exp.durasi.match(/\d{4}/) : null;
+        const year = yearMatch ? yearMatch[0] : 'Past';
+        let safeName = (exp.perusahaan || 'Company').toLowerCase().replace(/[^a-z0-9]/g, '_');
+        const filename = `${year}_${safeName}.json`;
+        
+        const fileItem = document.createElement('div');
+        fileItem.className = 'ide-file-item';
+        fileItem.innerHTML = `<i class="fa-solid fa-code me-2" style="color: #519aba;"></i> ${filename}`;
+        
+        fileItem.addEventListener('click', () => {
+            // Update active state in sidebar
+            document.querySelectorAll('.ide-file-item').forEach(el => el.classList.remove('active'));
+            fileItem.classList.add('active');
+            
+            // Update Tab
+            document.getElementById('ide-tab-name').innerText = filename;
+            
+            // Format durasi to match Timeline style
+            let formattedDurasi = exp.durasi;
+            if (formattedDurasi && typeof formatDateId === 'function') {
+                const parts = formattedDurasi.split('—').map(p => p.trim());
+                if (parts.length === 2) {
+                    formattedDurasi = `${formatDateId(parts[0])} — ${formatDateId(parts[1])}`;
+                }
+            }
+
+            // Generate JSON content
+            const jsonContent = {
+                "perusahaan": exp.perusahaan,
+                "posisi": exp.posisi,
+                "kategori": exp.kategori,
+                "durasi": formattedDurasi,
+                "deskripsi": exp.deskripsi || ""
+            };
+            
+            renderIDEContent(jsonContent);
+        });
+        
+        fileList.appendChild(fileItem);
+    });
+    
+    // Auto-click first item if exists
+    if (experiences.length > 0) {
+        fileList.firstChild.click();
+    }
+}
+
+function renderIDEContent(data) {
+    const contentArea = document.getElementById('ide-content-area');
+    if (!contentArea) return;
+    
+    // Clear previous typing if any
+    if (typingTimeout) clearTimeout(typingTimeout);
+    
+    const lines = [
+        `{`,
+        `  <span class="json-key">"perusahaan"</span>: <span class="json-string">"${data.perusahaan}"</span>,`,
+        `  <span class="json-key">"posisi"</span>: <span class="json-string">"${data.posisi}"</span>,`,
+        `  <span class="json-key">"kategori"</span>: <span class="json-string">"${data.kategori}"</span>,`,
+        `  <span class="json-key">"durasi"</span>: <span class="json-string">"${data.durasi}"</span>,`,
+        `  <span class="json-key">"deskripsi"</span>: <span class="json-string">"`
+    ];
+    
+    let descText = data.deskripsi;
+    if (!descText) descText = "";
+    
+    // Set base html
+    contentArea.innerHTML = lines.join('<br>') + `<span id="typing-target"></span>"</span><br>}`;
+    
+    const target = document.getElementById('typing-target');
+    target.classList.add('typing-cursor');
+    
+    let i = 0;
+    function typeWriter() {
+        if (i < descText.length) {
+            target.innerHTML += descText.charAt(i);
+            i++;
+            typingTimeout = setTimeout(typeWriter, 15);
+        } else {
+            target.classList.remove('typing-cursor');
+        }
+    }
+    
+    typeWriter();
 }

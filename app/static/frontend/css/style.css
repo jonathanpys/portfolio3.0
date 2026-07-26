@@ -667,6 +667,21 @@ h1, h2, h3, h4, h5, h6 {
   .timeline-dot {
     left: -1.5rem;
   }
+  footer {
+    font-size: 0.75rem !important;
+  }
+  .container {
+    padding-left: 1.5rem !important;
+    padding-right: 1.5rem !important;
+  }
+  .skills-container {
+    justify-content: center;
+    gap: 8px;
+  }
+  .skill-badge {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
 }
 
 /* Cursor Glow Animation */
@@ -686,4 +701,78 @@ h1, h2, h3, h4, h5, h6 {
 }
 .cursor-glow.active {
   opacity: 1;
+}
+
+/* IDE Style Customization */
+.ide-file-item {
+  padding: 4px 15px 4px 35px;
+  color: #ccc;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  transition: background 0.2s, color 0.2s;
+}
+.ide-file-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+.ide-file-item.active {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+.json-key { color: #9cdcfe; }
+.json-string { color: #ce9178; }
+.json-number { color: #b5cea8; }
+.json-boolean { color: #569cd6; }
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+/* Marquee Styles */
+.marquee-track {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+}
+.marquee-left {
+  animation: scrollLeft 30s linear infinite;
+}
+.marquee-right {
+  animation: scrollRight 30s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(calc(-50% - 0.5rem)); } /* -50% shifts half the track, 0.5rem for half the gap */
+}
+@keyframes scrollRight {
+  0% { transform: translateX(calc(-50% - 0.5rem)); }
+  100% { transform: translateX(0); }
+}
+
+/* LILPYS SVG Background Pattern */
+.lilpys-stroke {
+  fill: none;
+  stroke: var(--accent-lime);
+  stroke-width: 1.5;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  opacity: 0.08; /* Very faint */
+  stroke-dasharray: 600;
+  stroke-dashoffset: 600;
+  animation: drawPinstripe 12s linear infinite;
+}
+
+@keyframes drawPinstripe {
+  0% { stroke-dashoffset: 600; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -600; }
 }
