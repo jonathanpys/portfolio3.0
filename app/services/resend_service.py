@@ -70,9 +70,16 @@ def send_contact_email(nama, email, subjek, pesan):
     </html>
     """
 
+    # Gunakan format from_address yang aman
+    # Jika menggunakan onboarding@resend.dev, Resend sering menolak custom name
+    if sender_email == "onboarding@resend.dev":
+        from_address = sender_email
+    else:
+        from_address = f"{sender_name} <{sender_email}>"
+
     try:
         r = resend.Emails.send({
-            "from": f"{sender_name} <{sender_email}>",
+            "from": from_address,
             "to": owner_email,
             "subject": f"Contact Form: {subjek}",
             "html": html_content,

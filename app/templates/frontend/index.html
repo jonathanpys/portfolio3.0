@@ -56,7 +56,7 @@
     <!-- PRELOADER -->
     <div id="preloader">
         <div class="preloader-glow"></div>
-        <svg class="preloader-logo" viewBox="0 0 300 100" width="300" height="100" xmlns="http://www.w3.org/2000/svg" style="z-index: 2; position: relative;">
+        <svg class="preloader-logo" viewBox="0 0 300 100" width="300" height="100" xmlns="http://www.w3.org/2000/svg" style="z-index: 2; position: relative; overflow: visible;">
             <text x="50%" y="65%" text-anchor="middle" class="text-logo">JPYS</text>
         </svg>
     </div>
@@ -169,7 +169,7 @@
                             <div class="glass-card p-4 h-100">
                                 <h4 class="mb-4">Teknologi dan Alat</h4>
                                 <!-- Marquee Desktop -->
-                                <div class="d-none d-md-block" id="skills-marquee-wrapper" style="overflow: hidden; white-space: nowrap; position: relative; width: 100%;">
+                                <div class="d-none d-md-block marquee-wrapper" id="skills-marquee-wrapper">
                                     <div class="marquee-track marquee-left mb-3" id="marquee-row-1" style="display: flex; gap: 1rem; width: max-content;">
                                         <!-- Injected via JS -->
                                     </div>
@@ -209,51 +209,17 @@
         <section id="pengalaman" class="content-section">
             <h2 class="section-title reveal"><span class="text-accent">02.</span> Jenjang karier</h2>
             
-            <!-- IDE Editor for Desktop -->
-            <div class="mt-5 d-none d-md-flex reveal" id="ide-wrapper" style="width: 100%; height: 450px; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-radius: 8px; border: 1px solid var(--border-glass); flex-direction: column; overflow: hidden; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
-                <!-- IDE Header -->
-                <div style="background: rgba(30, 41, 59, 0.5); height: 35px; display: flex; align-items: center; padding: 0 15px; border-bottom: 1px solid var(--border-glass);">
-                    <div style="display: flex; gap: 6px;">
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
-                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
-                    </div>
-                    <div style="flex-grow: 1; text-align: center; color: #888; font-size: 0.8rem; font-family: monospace;">portfolio - Visual Studio Code</div>
-                </div>
-                <!-- IDE Body -->
-                <div style="display: flex; flex-grow: 1; height: calc(100% - 35px);">
-                    <!-- Sidebar -->
-                    <div style="width: 250px; background: rgba(15, 23, 42, 0.4); border-right: 1px solid var(--border-glass); display: flex; flex-direction: column;">
-                        <div style="padding: 10px 15px; color: #ccc; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px;">Explorer</div>
-                        <div style="padding: 5px 15px; color: #fff; font-size: 0.85rem; font-weight: bold; display: flex; align-items: center; cursor: pointer;">
-                            <i class="fa-solid fa-chevron-down me-2" style="font-size: 0.7rem;"></i> PENGALAMAN
-                        </div>
-                        <div id="ide-file-list" style="overflow-y: auto; flex-grow: 1; padding-bottom: 10px;">
-                            <!-- Files injected via JS -->
-                        </div>
-                    </div>
-                    <!-- Editor Content -->
-                    <div style="flex-grow: 1; background: transparent; display: flex; flex-direction: column;">
-                        <!-- Tabs -->
-                        <div style="height: 35px; background: rgba(30, 41, 59, 0.3); border-bottom: 1px solid var(--border-glass); display: flex; align-items: center; padding: 0;" id="ide-tabs">
-                            <div class="ide-tab active" id="active-tab" style="background: rgba(15, 23, 42, 0.6); color: #fff; padding: 0 15px; height: 100%; display: flex; align-items: center; font-size: 0.85rem; border-top: 2px solid var(--accent-lime); font-family: monospace;">
-                                <i class="fa-solid fa-code me-2" style="color: #519aba;"></i> <span id="ide-tab-name">welcome.json</span>
-                            </div>
-                        </div>
-                        <!-- Content -->
-                        <div id="ide-content-area" style="padding: 20px; overflow-y: auto; color: #d4d4d4; font-family: 'Consolas', 'Courier New', monospace; font-size: 0.95rem; line-height: 1.6;">
-                            <span style="color: #6a9955;">// Pilih file di sidebar untuk melihat detail pengalaman.</span>
-                        </div>
-                    </div>
-                </div>
+            <!-- Desktop Horizontal Slider -->
+            <div class="d-none d-md-flex mt-4 pb-3 horizontal-slider reveal delay-100" id="experience-slider-desktop" style="gap: 1.5rem; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; padding-left: 1rem; padding-right: 1rem; margin-left: -1rem; margin-right: -1rem;">
+                <div class="spinner-border text-accent mx-auto" role="status"></div>
             </div>
 
-            <!-- Fallback for Mobile (Timeline) -->
-            <div class="timeline mt-5 d-block d-md-none" id="experience-container">
-                <!-- Experiences diinject via JS -->
+            <!-- Mobile Timeline -->
+            <div class="timeline mt-5 d-block d-md-none reveal delay-100" id="experience-timeline-mobile">
                 <div class="spinner-border text-accent" role="status"></div>
             </div>
         </section>
+
 
         <!-- PROYEK SECTION -->
         <section id="proyek" class="content-section">
@@ -280,41 +246,69 @@
             <h2 class="section-title reveal"><span class="text-accent">04.</span> Hubungi Saya</h2>
             <p class="text-muted mb-4 reveal delay-100">Punya pertanyaan atau tawaran kerja sama? Silakan kirim pesan melalui form di bawah ini.</p>
 
-            <div class="row justify-content-center">
-                <div class="col-lg-8 reveal delay-200">
-                    <div class="glass-card p-4 p-md-5">
-                        <form id="contactForm">
-                            <div class="row g-3">
-                                <div class="col-md-6">
-                                    <label class="form-label">Nama <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="nama" required placeholder="Your Name">
-                                </div>
-                                <div class="col-md-6">
-                                    <label class="form-label">Email <span class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" name="email" required placeholder="youremail@example.com">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Subjek <span class="text-danger">*</span></label>
-                                    <input type="text" class="form-control" name="subjek" required placeholder="Tawaran Kerjasama / Pertanyaan">
-                                </div>
-                                <div class="col-12">
-                                    <label class="form-label">Pesan <span class="text-danger">*</span></label>
-                                    <textarea class="form-control" name="pesan" rows="5" required placeholder="Halo, saya ingin berdiskusi mengenai..."></textarea>
-                                </div>
-                                <div class="col-12 text-end mt-4">
-                                    <button type="submit" class="btn btn-primary" id="btnSubmitContact">
-                                        <span>Kirim Pesan</span>
-                                    </button>
+            <div class="row g-5 mt-3">
+                <!-- Left Column: Profile Card -->
+                <div class="col-lg-5 reveal delay-100">
+                    <div class="p-4 p-md-5 text-center h-100 d-flex flex-column justify-content-center align-items-center" style="border: 1px solid var(--border-glass); border-radius: var(--radius-lg); background: transparent;">
+                        <img id="contact-profile-img" src="https://via.placeholder.com/150" alt="Profile" class="rounded-circle mb-4" style="width: 130px; height: 130px; object-fit: cover; border: 3px solid var(--border-glass);">
+                        <h3 id="contact-profile-name" class="fw-bold mb-1">Nama</h3>
+                        <div id="contact-profile-role" class="text-accent mb-3 fw-medium">Role</div>
+                        <p id="contact-profile-address" class="text-muted small mb-4 mx-auto" style="max-width: 280px; line-height: 1.6;">
+                            Alamat
+                        </p>
+                        
+                        <div id="contact-profile-socials" class="d-flex justify-content-center gap-3">
+                            <!-- Socials injected via JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Contact Form -->
+                <div class="col-lg-7 reveal delay-200">
+                    <h3 class="fw-bold mb-4">Kirim Pesan</h3>
+                    <form id="contactForm">
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small mb-1">Your Name</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0 text-muted"><i class="fa-solid fa-user"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0" name="nama" required placeholder="Masukkan nama Anda">
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                            <div class="col-md-6">
+                                <label class="form-label text-muted small mb-1">Your Email</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0 text-muted"><i class="fa-solid fa-envelope"></i></span>
+                                    <input type="email" class="form-control border-start-0 ps-0" name="email" required placeholder="email@example.com">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-muted small mb-1">Subject</label>
+                                <div class="input-group">
+                                    <span class="input-group-text border-end-0 text-muted"><i class="fa-solid fa-pen"></i></span>
+                                    <input type="text" class="form-control border-start-0 ps-0" name="subjek" required placeholder="Subjek pesan">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-muted small mb-1">Your Message</label>
+                                <div class="input-group align-items-start">
+                                    <span class="input-group-text border-end-0 text-muted pt-3"><i class="fa-solid fa-message"></i></span>
+                                    <textarea class="form-control border-start-0 ps-0 pt-3" name="pesan" rows="5" required placeholder="Tulis pesan Anda..."></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 text-end mt-4">
+                                <button type="submit" class="btn btn-primary" id="btnSubmitContact">
+                                    <span>Kirim Pesan</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="text-center py-4 border-top border-secondary text-muted small">
+    <footer class="text-center py-4 border-top small" style="border-top-color: rgba(255, 255, 255, 0.04) !important; color: rgba(255, 255, 255, 0.3);">
         <div class="container d-flex justify-content-between align-items-center flex-column flex-md-row">
             <div id="footer-name">© 2026 Portfolio</div>
             <div id="footer-address" class="mt-2 mt-md-0 text-end">

@@ -396,9 +396,89 @@ h1, h2, h3, h4, h5, h6 {
   text-align: justify;
 }
 .hover-container:hover .hover-desc-wrapper {
-  max-height: 300px;
+  max-height: 500px;
   opacity: 1;
-  margin-top: 0.75rem;
+  margin-top: 1rem;
+}
+
+/* Horizontal Slider Base & Hide Scrollbar */
+.horizontal-slider {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+  transition: mask-image 0.3s ease, -webkit-mask-image 0.3s ease;
+}
+.horizontal-slider::-webkit-scrollbar {
+  display: none; /* Chrome, Safari and Opera */
+}
+
+/* Dynamic Mask Classes */
+.horizontal-slider.mask-both {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+}
+.horizontal-slider.mask-left {
+  -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 100%);
+  mask-image: linear-gradient(to right, transparent, black 5%, black 100%);
+}
+.horizontal-slider.mask-right {
+  -webkit-mask-image: linear-gradient(to right, black 0%, black 95%, transparent);
+  mask-image: linear-gradient(to right, black 0%, black 95%, transparent);
+}
+.horizontal-slider.mask-none {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* Contact Social Icons */
+.social-icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.social-icon-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-main);
+  transform: translateY(-3px);
+}
+
+/* Material Inputs (Login Style) */
+#contactForm .input-group {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.04);
+  transition: border-bottom-color 0.3s;
+  align-items: flex-start; /* For textarea alignment */
+}
+#contactForm .input-group:focus-within {
+  border-bottom-color: var(--accent-lime);
+}
+#contactForm .form-control, #contactForm textarea {
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--text-main) !important;
+  border-radius: 0 !important;
+  padding: 0.75rem 0.5rem !important;
+  box-shadow: none !important;
+}
+#contactForm .form-control::placeholder, #contactForm textarea::placeholder {
+  color: var(--text-muted);
+}
+#contactForm .input-group-text {
+  background-color: transparent !important;
+  border: none !important;
+  color: var(--text-muted);
+  border-radius: 0;
+  padding-top: 0.85rem; /* Align icon with text */
+}
+#contactForm .input-group:focus-within .input-group-text,
+#contactForm .input-group:focus-within .form-control {
+  color: var(--accent-lime) !important;
 }
 
 /* Projects */
@@ -734,6 +814,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /* Marquee Styles */
+.marquee-wrapper {
+  overflow: hidden;
+  white-space: nowrap;
+  position: relative;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
 .marquee-track {
   display: flex;
   gap: 1rem;
@@ -820,16 +908,16 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .text-logo {
-  font-family: var(--font-primary);
+  font-family: 'Arial', sans-serif;
   font-size: 80px;
   font-weight: 800;
-  letter-spacing: -2px; /* Makes letters connect/touch */
+  letter-spacing: 2px; /* Give letters breathing room so strokes don't overlap */
   fill: transparent;
   stroke: var(--accent-lime);
   stroke-width: 2px;
   stroke-dasharray: 400;
   stroke-dashoffset: 400;
-  animation: drawTextLogo 2.5s ease forwards;
+  animation: drawTextLogo 2s ease-in-out infinite alternate;
 }
 
 @keyframes drawTextLogo {

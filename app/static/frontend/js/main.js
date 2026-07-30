@@ -4,15 +4,11 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Preloader Logic
-    window.addEventListener('load', () => {
-        const preloader = document.getElementById('preloader');
-        if (preloader) {
-            // Wait for logo animation to finish
-            setTimeout(() => {
-                preloader.classList.add('preloader-hidden');
-                setTimeout(() => preloader.remove(), 600);
-            }, 2500);
+    const windowLoadPromise = new Promise(resolve => {
+        if (document.readyState === 'complete') {
+            resolve();
+        } else {
+            window.addEventListener('load', resolve);
         }
     });
 
@@ -69,13 +65,28 @@ document.addEventListener("DOMContentLoaded", () => {
     // Observe static elements right away
     window.observeElements();
 
-    fetchProfile().then(() => {
+    Promise.all([
+        windowLoadPromise,
+        fetchProfile(),
+        fetchSkills(),
+        fetchCertificates(),
+        fetchExperiences(),
+        fetchProjects()
+    ]).then(() => {
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('preloader-hidden');
+            setTimeout(() => preloader.remove(), 800); // 800ms to allow CSS transition
+        }
         if (window.observeElements) window.observeElements();
+    }).catch(err => {
+        console.error("Error in initial load", err);
+        const preloader = document.getElementById('preloader');
+        if (preloader) {
+            preloader.classList.add('preloader-hidden');
+            setTimeout(() => preloader.remove(), 800);
+        }
     });
-    fetchSkills();
-    fetchCertificates();
-    fetchExperiences();
-    fetchProjects();
     
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -173,6 +184,26 @@ async function fetchProfile() {
                 <li class="mb-2 d-flex align-items-start"><i class="fa-solid fa-graduation-cap fa-fw text-accent me-3 mt-1"></i> <span>${data.universitas || '-'}</span></li>
                 <li class="mb-2 d-flex align-items-start"><i class="fa-solid fa-location-dot fa-fw text-accent me-3 mt-1"></i> <span>${data.tempat_lahir || '-'}</span></li>
             `;
+            
+            // Populate Contact Section Profile Card
+            const contactName = document.getElementById('contact-profile-name');
+            const contactImg = document.getElementById('contact-profile-img');
+            const contactRole = document.getElementById('contact-profile-role');
+            const contactAddress = document.getElementById('contact-profile-address');
+            const contactSocials = document.getElementById('contact-profile-socials');
+            
+            if (contactName) contactName.innerText = data.nama_lengkap || 'Bram Hendrawan';
+            if (contactImg && data.foto_url) contactImg.src = data.foto_url;
+            if (contactRole) contactRole.innerText = data.profesi || 'Software Engineer'; 
+            if (contactAddress) contactAddress.innerText = data.alamat || 'Dusun. Kadipiro RT3 RW 6, Desa Karang Tengah, Kabupaten Semarang Jawa Tengah';
+            if (contactSocials) {
+                contactSocials.innerHTML = `
+                    <a href="https://github.com/jonathanpys" target="_blank" class="social-icon-btn"><i class="fa-brands fa-github"></i></a>
+                    <a href="https://www.instagram.com/jonathanyudya/" target="_blank" class="social-icon-btn"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/jonathanpys" target="_blank" class="social-icon-btn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://wa.me/6281326260461" target="_blank" class="social-icon-btn"><i class="fa-brands fa-whatsapp"></i></a>
+                `;
+            }
         }
     } catch (err) {
         console.error("Error fetching profile", err);
@@ -311,16 +342,22 @@ async function fetchExperiences() {
     try {
         const res = await fetch('/api/experiences');
         const json = await res.json();
-        const container = document.getElementById('experience-container');
+        const desktopContainer = document.getElementById('experience-slider-desktop');
+        const mobileContainer = document.getElementById('experience-timeline-mobile');
         
         if (json.status === 'success' && json.data) {
-            container.innerHTML = '';
+            if (desktopContainer) desktopContainer.innerHTML = '';
+            if (mobileContainer) mobileContainer.innerHTML = '';
+            
             if (json.data.length === 0) {
-                container.innerHTML = '<span class="text-muted">Belum ada pengalaman yang ditambahkan.</span>';
+                if (desktopContainer) desktopContainer.innerHTML = '<span class="text-muted mx-auto">Belum ada pengalaman yang ditambahkan.</span>';
+                if (mobileContainer) mobileContainer.innerHTML = '<span class="text-muted">Belum ada pengalaman yang ditambahkan.</span>';
                 return;
             }
             
-            let html = '';
+            let desktopHtml = '';
+            let mobileHtml = '';
+            
             json.data.forEach((exp, index) => {
                 let dateText = exp.durasi || 'Tahun Tidak Diketahui';
                 if (dateText !== 'Tahun Tidak Diketahui') {
@@ -330,32 +367,79 @@ async function fetchExperiences() {
                     }
                 }
                 
-                const catBadge = exp.kategori === 'pekerjaan' ? '<span class="badge bg-primary ms-2" style="font-size: 0.7rem;">Kerja</span>' : 
-                                 exp.kategori === 'organisasi' ? '<span class="badge bg-info ms-2" style="font-size: 0.7rem;">Organisasi</span>' :
-                                 '<span class="badge bg-warning text-dark ms-2" style="font-size: 0.7rem;">Prestasi</span>';
+                let catText = exp.kategori === 'pekerjaan' ? 'Kerja' : 
+                              exp.kategori === 'organisasi' ? 'Organisasi' : 'Prestasi';
                 
-                const dotColorClass = exp.kategori === 'organisasi' ? 'dot-info' : 
-                                      exp.kategori === 'prestasi' ? 'dot-warning' : '';
+                const catBadge = `<span class="badge ms-2" style="background: rgba(255,255,255,0.05); border: 1px solid var(--border-glass); color: var(--text-muted); font-weight: normal; font-size: 0.75rem; letter-spacing: 0.5px;">${catText}</span>`;
                 
-                const delayClass = (index % 5) * 100 === 0 ? '' : `delay-${(index % 5) * 100}`;
-                html += `
-                    <div class="timeline-item reveal ${delayClass}">
-                        <div class="timeline-dot ${dotColorClass}"></div>
-                        <div class="timeline-content hover-container">
-                            <div class="timeline-date">${dateText}</div>
-                            <h4 class="mb-1 d-flex align-items-center">${exp.posisi} ${catBadge}</h4>
-                            <div class="text-accent mb-2 fw-medium">${exp.perusahaan}</div>
+                // Desktop HTML (Horizontal Slider)
+                desktopHtml += `
+                    <div style="flex: 0 0 450px; scroll-snap-align: start;">
+                        <div class="d-flex flex-column exp-card hover-container" style="transition: transform 0.3s ease; user-select: none; padding: 1rem;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div style="font-size: 0.85rem; color: var(--text-muted); border: 1px solid var(--border-glass); padding: 4px 12px; border-radius: 20px;">
+                                    ${dateText}
+                                </div>
+                                ${catBadge}
+                            </div>
+                            <h4 class="mb-1 fw-bold" style="font-size: 1.2rem; white-space: normal;">${exp.posisi}</h4>
+                            <div class="text-accent mb-3 fw-medium" style="white-space: normal;">${exp.perusahaan}</div>
                             <div class="hover-desc-wrapper">
-                                <p class="text-muted mb-0 hover-desc">${exp.deskripsi || ''}</p>
+                                <p class="text-muted mb-0" style="font-size: 0.95rem; line-height: 1.6; text-align: justify; white-space: normal;">
+                                    ${exp.deskripsi || 'Tidak ada deskripsi.'}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Mobile HTML (Timeline)
+                const delayClass = (index % 5) * 100 === 0 ? '' : `delay-${(index % 5) * 100}`;
+                mobileHtml += `
+                    <div class="timeline-item reveal ${delayClass}">
+                        <div class="timeline-dot" style="background-color: var(--accent-lime); border: 4px solid var(--bg-main);"></div>
+                        <div class="timeline-content hover-container" style="background: rgba(20, 27, 45, 0.4); border: 1px solid var(--border-glass); padding: 20px; border-radius: var(--radius-md); transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.borderColor='rgba(255, 255, 255, 0.15)'" onmouseout="this.style.borderColor='var(--border-glass)'">
+                            <div class="timeline-date">${dateText}</div>
+                            <h4 class="mb-1 d-flex align-items-center" style="font-size: 1.1rem;">${exp.posisi} ${catBadge}</h4>
+                            <div class="text-accent mb-2 fw-medium" style="font-size: 0.95rem;">${exp.perusahaan}</div>
+                            <div class="hover-desc-wrapper">
+                                <p class="text-muted mb-0 hover-desc" style="font-size: 0.9rem;">${exp.deskripsi || 'Tidak ada deskripsi.'}</p>
                             </div>
                         </div>
                     </div>
                 `;
             });
-            container.innerHTML = html;
-            if (typeof initExperienceIDE === 'function') {
-                initExperienceIDE(json.data);
+            
+            if (desktopContainer) desktopContainer.innerHTML = desktopHtml;
+            if (mobileContainer) mobileContainer.innerHTML = mobileHtml;
+            
+            // Dynamic Mask Logic for Desktop
+            if (desktopContainer) {
+                const updateMask = () => {
+                    const scrollLeft = Math.ceil(desktopContainer.scrollLeft);
+                    const maxScroll = Math.floor(desktopContainer.scrollWidth - desktopContainer.clientWidth);
+                    
+                    const isAtLeft = scrollLeft <= 5;
+                    const isAtRight = scrollLeft >= maxScroll - 5;
+                    
+                    desktopContainer.classList.remove('mask-both', 'mask-left', 'mask-right', 'mask-none');
+                    
+                    if (isAtLeft && isAtRight) {
+                        desktopContainer.classList.add('mask-none');
+                    } else if (isAtLeft) {
+                        desktopContainer.classList.add('mask-right');
+                    } else if (isAtRight) {
+                        desktopContainer.classList.add('mask-left');
+                    } else {
+                        desktopContainer.classList.add('mask-both');
+                    }
+                };
+                
+                desktopContainer.addEventListener('scroll', updateMask);
+                window.addEventListener('resize', updateMask);
+                setTimeout(updateMask, 100);
             }
+            
             if (window.observeElements) window.observeElements();
         }
     } catch (err) {
@@ -555,96 +639,3 @@ function showToast(text, type) {
 
 let typingTimeout = null;
 
-function initExperienceIDE(experiences) {
-    const fileList = document.getElementById('ide-file-list');
-    if (!fileList) return;
-    
-    fileList.innerHTML = '';
-    
-    experiences.forEach((exp, index) => {
-        // Create pseudo-filename
-        const yearMatch = exp.durasi ? exp.durasi.match(/\d{4}/) : null;
-        const year = yearMatch ? yearMatch[0] : 'Past';
-        let safeName = (exp.perusahaan || 'Company').toLowerCase().replace(/[^a-z0-9]/g, '_');
-        const filename = `${year}_${safeName}.json`;
-        
-        const fileItem = document.createElement('div');
-        fileItem.className = 'ide-file-item';
-        fileItem.innerHTML = `<i class="fa-solid fa-code me-2" style="color: #519aba;"></i> ${filename}`;
-        
-        fileItem.addEventListener('click', () => {
-            // Update active state in sidebar
-            document.querySelectorAll('.ide-file-item').forEach(el => el.classList.remove('active'));
-            fileItem.classList.add('active');
-            
-            // Update Tab
-            document.getElementById('ide-tab-name').innerText = filename;
-            
-            // Format durasi to match Timeline style
-            let formattedDurasi = exp.durasi;
-            if (formattedDurasi && typeof formatDateId === 'function') {
-                const parts = formattedDurasi.split('—').map(p => p.trim());
-                if (parts.length === 2) {
-                    formattedDurasi = `${formatDateId(parts[0])} — ${formatDateId(parts[1])}`;
-                }
-            }
-
-            // Generate JSON content
-            const jsonContent = {
-                "perusahaan": exp.perusahaan,
-                "posisi": exp.posisi,
-                "kategori": exp.kategori,
-                "durasi": formattedDurasi,
-                "deskripsi": exp.deskripsi || ""
-            };
-            
-            renderIDEContent(jsonContent);
-        });
-        
-        fileList.appendChild(fileItem);
-    });
-    
-    // Auto-click first item if exists
-    if (experiences.length > 0) {
-        fileList.firstChild.click();
-    }
-}
-
-function renderIDEContent(data) {
-    const contentArea = document.getElementById('ide-content-area');
-    if (!contentArea) return;
-    
-    // Clear previous typing if any
-    if (typingTimeout) clearTimeout(typingTimeout);
-    
-    const lines = [
-        `{`,
-        `  <span class="json-key">"perusahaan"</span>: <span class="json-string">"${data.perusahaan}"</span>,`,
-        `  <span class="json-key">"posisi"</span>: <span class="json-string">"${data.posisi}"</span>,`,
-        `  <span class="json-key">"kategori"</span>: <span class="json-string">"${data.kategori}"</span>,`,
-        `  <span class="json-key">"durasi"</span>: <span class="json-string">"${data.durasi}"</span>,`,
-        `  <span class="json-key">"deskripsi"</span>: <span class="json-string">"`
-    ];
-    
-    let descText = data.deskripsi;
-    if (!descText) descText = "";
-    
-    // Set base html
-    contentArea.innerHTML = lines.join('<br>') + `<span id="typing-target"></span>"</span><br>}`;
-    
-    const target = document.getElementById('typing-target');
-    target.classList.add('typing-cursor');
-    
-    let i = 0;
-    function typeWriter() {
-        if (i < descText.length) {
-            target.innerHTML += descText.charAt(i);
-            i++;
-            typingTimeout = setTimeout(typeWriter, 15);
-        } else {
-            target.classList.remove('typing-cursor');
-        }
-    }
-    
-    typeWriter();
-}
